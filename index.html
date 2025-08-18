@@ -1,92 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Spin & Earn</title>
-    <link rel="stylesheet" href="style.css" />
-  </head>
-  <body>
-    <h1>🎡 Spin & Earn</h1>
-    <div id="points">Balance: ₹0</div>
-    <div id="progress">Spins: 0/10</div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Spin & Earn</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h1>🎡 Spin & Earn</h1>
+  <div id="points">Balance: ₹0</div>
+  <div id="progress">Spins: 0/10</div>
+
+  <!-- Instruction Popup -->
   <div id="instructionPopup" class="popup-ad">
-  <div class="popup-content">
-    <span id="closeInstruction" class="close-x">✖</span>
-    <h2>📖 How to Play</h2>
-    <ul class="instruction-list">
-      <li>✅ Withdraw when you reach ₹1000.</li>
-      <li>📩 Contact: <a href="https://t.me/yourTelegramID" target="_blank">Telegram</a></li>
-      <li>⏳ 10 spins per session → wait 2 hours for next spins.</li>
-      <li>📱 Use only one device per ID (earnings linked to device).</li>
-    </ul>
+    <div class="popup-content">
+      <span id="closeInstruction" class="close-x">✖</span>
+      <h2>📖 How to Play</h2>
+      <ul class="instruction-list">
+        <li>✅ Withdraw when you reach ₹1000.</li>
+        <li>📩 Contact: <a href="https://t.me/yourTelegramID" target="_blank">Telegram</a></li>
+        <li>⏳ 10 spins per session → wait 2 hours for next spins.</li>
+        <li>📱 Use only one device per ID (earnings linked to device).</li>
+      </ul>
+    </div>
   </div>
-</div>
-    <button id="instructionBtn" class="instruction-btn">📖 Instructions</button>
-    <div class="wheel-container">
-      <div class="arrow"></div>
-      <div id="wheel" class="wheel">
-        <div class="number" style="--i: 1">₹8</div>
-        <div class="number" style="--i: 2">₹7</div>
-        <div class="number" style="--i: 3">₹6</div>
-        <div class="number" style="--i: 4">₹5</div>
-        <div class="number" style="--i: 5">₹4</div>
-        <div class="number" style="--i: 6">NA</div>
-        <div class="number" style="--i: 7">₹2</div>
-        <div class="number" style="--i: 8">₹1</div>
-        <div class="center" id="centerNumber">?</div>
-      </div>
+
+  <button id="instructionBtn" class="instruction-btn">📖 Instructions</button>
+
+  <!-- Wheel -->
+  <div class="wheel-container">
+    <div class="arrow"></div>
+    <div id="wheel" class="wheel">
+      <div class="number" style="--i: 1">₹8</div>
+      <div class="number" style="--i: 2">₹7</div>
+      <div class="number" style="--i: 3">₹6</div>
+      <div class="number" style="--i: 4">₹5</div>
+      <div class="number" style="--i: 5">₹4</div>
+      <div class="number" style="--i: 6">NA</div>
+      <div class="number" style="--i: 7">₹2</div>
+      <div class="number" style="--i: 8">₹1</div>
+      <div class="center" id="centerNumber">?</div>
     </div>
+  </div>
 
-    <button id="spinBtn" class="spin-btn">🎡 Spin Now</button>
-    <div id="cooldownMsg" class="cooldown"></div>
+  <button id="spinBtn" class="spin-btn">🎡 Spin Now</button>
+  <div id="cooldownMsg" class="cooldown"></div>
 
-    <button id="withdrawBtn" class="withdraw-btn" disabled>
-      Withdraw ₹1000
-    </button>
-    <p class="min-note">* Minimum withdraw ₹1000</p>
+  <button id="withdrawBtn" class="withdraw-btn" disabled>Withdraw ₹1000</button>
+  <p class="min-note">* Minimum withdraw ₹1000</p>
 
-    <!-- Ads -->
-    <div id="adPopup1" class="popup-ad">
-      <div class="popup-content">
-        <h2>Sponsored Ad 1</h2>
-        <div class="ad-box">
-          <iframe
-            src="//libtl.com/sdk.js?data-zone=9719582"
-            style="width: 100%; height: 150px; border: 0"
-          ></iframe>
-        </div>
-        <button id="closeAd1" class="close-btn" disabled>Wait...</button>
-      </div>
-    </div>
+  <canvas id="confettiCanvas"></canvas>
 
-    <div id="adPopup2" class="popup-ad">
-      <div class="popup-content">
-        <h2>Sponsored Ad 2</h2>
-        <div class="ad-box">
-          <iframe
-            src="//libtl.com/sdk.js?data-zone=9719582&v=2"
-            style="width: 100%; height: 150px; border: 0"
-          ></iframe>
-        </div>
-        <button id="closeAd2" class="close-btn" disabled>Wait...</button>
-      </div>
-    </div>
+  <!-- Interstitial Ad Script -->
+  <script src="//libtl.com/sdk.js" data-zone="9734652" data-sdk="show_9734652"></script>
 
-    <div id="adPopup3" class="popup-ad">
-      <div class="popup-content">
-        <h2>Sponsored Ad 3</h2>
-        <div class="ad-box">
-          <iframe
-            src="//libtl.com/sdk.js?data-zone=9719582&v=3"
-            style="width: 100%; height: 150px; border: 0"
-          ></iframe>
-        </div>
-        <button id="closeAd3" class="close-btn" disabled>Wait...</button>
-      </div>
-    </div>
-
-    <canvas id="confettiCanvas"></canvas>
-    <script src="script.js"></script>
-  </body>
+  <script src="script.js"></script>
+</body>
 </html>
