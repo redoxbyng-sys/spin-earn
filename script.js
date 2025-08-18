@@ -2,78 +2,80 @@ const wheel = document.getElementById("wheel");
 const pointsDisplay = document.getElementById("points");
 const spinBtn = document.getElementById("spinBtn");
 
-const popupAd = document.getElementById("popupAd");
-const adBox = popupAd.querySelector(".ad-box");
-
 // Load balance from localStorage
 let balance = parseInt(localStorage.getItem("dogBalance")) || 0;
 pointsDisplay.innerText = "Balance: ₹" + balance;
 
 let spinning = false;
 
-// Spin wheel function
+// Spin wheel logic
 function spinWheel() {
   const randomDeg = 360 * 3 + Math.floor(Math.random() * 360);
   wheel.style.transform = `rotate(${randomDeg}deg)`;
 
   setTimeout(() => {
-    balance += 1; // reward
+    balance += 1; // reward per spin
     localStorage.setItem("dogBalance", balance);
     pointsDisplay.innerText = "Balance: ₹" + balance + " (+₹1)";
     spinning = false;
   }, 4200);
 }
 
-// Show interstitial ad in popup overlay
-function showInterstitialAd(adConfig) {
+// Show ad by type
+function showAd(adType) {
   return new Promise((resolve) => {
-    popupAd.style.display = "flex";
-    adBox.innerText = "Loading ad...";
-
     if (typeof show_9734652 === "function") {
-      show_9734652(adConfig) // pass different config for different ads
-        .then(() => {
-          adBox.innerText = "Ad finished!";
-          setTimeout(() => {
-            popupAd.style.display = "none";
-            resolve();
-          }, 1000);
-        })
-        .catch(() => {
-          adBox.innerText = "Ad failed or skipped.";
-          setTimeout(() => {
-            popupAd.style.display = "none";
-            resolve();
-          }, 1000);
-        });
+      switch(adType) {
+        case "rewardedInterstitial":
+          show_9734652().then(() => resolve()).catch(() => resolve());
+          break;
+        case "rewardedPopup":
+          show_9734652('pop').then(() => resolve()).catch(() => resolve());
+          break;
+        case "inAppInterstitial":
+          show_9734652({
+            type: 'inApp',
+            inAppSettings: {
+              frequency: 2,
+              capping: 0.1,
+              interval: 30,
+              timeout: 5,
+              everyPage: false
+            }
+          }).then(() => resolve()).catch(() => resolve());
+          break;
+        default:
+          resolve();
+      }
     } else {
       console.warn("SDK not loaded, skipping ad");
-      adBox.innerText = "SDK not loaded.";
-      setTimeout(() => {
-        popupAd.style.display = "none";
-        resolve();
-      }, 1000);
+      resolve();
     }
   });
 }
 
-// Show 3 different interstitial ads then spin
-async function show3DifferentAdsThenSpin() {
+// Show 3 ads sequentially with delay
+async function showAdsThenSpin() {
   if (spinning) return;
   spinning = true;
 
-  const adConfigs = [
-    { type: 'inApp', placementId: 'ad1' },
-    { type: 'inApp', placementId: 'ad2' },
-    { type: 'inApp', placementId: 'ad3' }
-  ];
+  // 1st ad - Rewarded Interstitial
+  await showAd("rewardedInterstitial");
 
-  for (let config of adConfigs) {
-    await showInterstitialAd(config);
-    await new Promise(res => setTimeout(res, 2000)); // 2s gap
-  }
+  // Wait 2 seconds before next ad
+  await new Promise(res => setTimeout(res, 2000));
 
+  // 2nd ad - Rewarded Popup
+  await showAd("rewardedPopup");
+
+  // Wait 3 seconds before next ad
+  await new Promise(res => setTimeout(res, 3000));
+
+  // 3rd ad - In-App Interstitial
+  await showAd("inAppInterstitial");
+
+  // Spin after all ads
   spinWheel();
 }
 
-spinBtn.addEventListener("click", show3DifferentAdsThenSpin);
+spinBtn.addEventListener("click", showAdsThenSpin);

@@ -1,42 +1,34 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dog Spin & Earn</title>
 
   <!-- Monetag SDK -->
-  <script src='//libtl.com/sdk.js' data-zone='9734652' data-sdk='show_9734652'></script>
-
-  <!-- CSS -->
-  <link rel="stylesheet" href="style.css" />
+ <script src='//libtl.com/sdk.js' data-zone='9734652' data-sdk='show_9734652'></script>
+  <link rel="stylesheet" href="style.css"/>
 </head>
 <body>
   <h1>🐶 Dog Spin & Earn</h1>
   <div id="points">Balance: ₹0</div>
 
   <div class="wheel-container">
-    <div id="wheel" class="wheel">
-      <div class="dog">
-        <img src="https://i.ibb.co/0V4K2cF/cute-dog.png" alt="Dog">
-      </div>
-    </div>
+    <div id="wheel" class="wheel"></div>
   </div>
 
   <button id="spinBtn" class="spin-btn">🎡 Spin Now</button>
 
-  <!-- Popup Ad Container -->
+  <!-- Popup Ad -->
   <div id="popupAd" class="popup-ad">
     <div class="popup-content">
       <span id="closePopup" class="close-btn">✖</span>
-      <h2>Sponsored Ad</h2>
-      <p>Watch this ad to continue...</p>
-      <div class="ad-box">Ad is loading...</div>
+      <h2>Sponsored Ads</h2>
+      <p>Watch these ads to continue...</p>
+      <div id="adBox" class="ad-box">Loading Ad...</div>
     </div>
   </div>
 
-  <!-- JS -->
   <script src="script.js"></script>
-  
 </body>
 </html>
