@@ -1,34 +1,78 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dog Spin & Earn</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dog Spin & Earn</title>
 
-  <!-- Monetag SDK -->
- <script src='//libtl.com/sdk.js' data-zone='9734652' data-sdk='show_9734652'></script>
-  <link rel="stylesheet" href="style.css"/>
-</head>
-<body>
-  <h1>🐶 Dog Spin & Earn</h1>
-  <div id="points">Balance: ₹0</div>
+    <!-- Monetag SDK -->
+    <script
+      src="//libtl.com/sdk.js"
+      data-zone="9734652"
+      data-sdk="show_9734652"
+    ></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>🎡 Spin & Earn 🏆</h1>
 
-  <div class="wheel-container">
-    <div id="wheel" class="wheel"></div>
-  </div>
+    <div id="points">Balance: ₹0</div>
+    <!-- <div id="spinsInfo">Spins: 0/10</div> -->
+    <div
+      id="timer"
+      style="color: red; font-weight: bold; margin-bottom: 10px"
+    ></div>
 
-  <button id="spinBtn" class="spin-btn">🎡 Spin Now</button>
-
-  <!-- Popup Ad -->
-  <div id="popupAd" class="popup-ad">
-    <div class="popup-content">
-      <span id="closePopup" class="close-btn">✖</span>
-      <h2>Sponsored Ads</h2>
-      <p>Watch these ads to continue...</p>
-      <div id="adBox" class="ad-box">Loading Ad...</div>
+    <div id="instructionPopup" class="popup-ad">
+      <div class="popup-content">
+        <span id="closeInstruction" class="close-x">✖</span>
+        <h2>📖 How to Play</h2>
+        <ul class="instruction-list">
+          <li>✅ Withdraw when you reach ₹1000.</li>
+          <li>
+            📩 Contact:
+            <a href="https://t.me/yourTelegramID" target="_blank">Telegram</a>
+          </li>
+          <li>⏳ 10 spins per session → wait 2 hours for next spins.</li>
+          <li>📱 Use only one device per ID (earnings linked to device).</li>
+        </ul>
+      </div>
     </div>
-  </div>
 
-  <script src="script.js"></script>
-</body>
+  <button id="instructionBtn" class="instruction-btn">📖 Instructions</button>
+
+    <div class="wheel-container">
+      <div id="wheel" class="wheel">
+        <span class="wheel-number" style="--i: 0">NA</span>
+        <span class="wheel-number" style="--i: 1">1</span>
+        <span class="wheel-number" style="--i: 2">2</span>
+        <span class="wheel-number" style="--i: 3">3</span>
+        <span class="wheel-number" style="--i: 4">4</span>
+        <span class="wheel-number" style="--i: 5">5</span>
+        <span class="wheel-number" style="--i: 6">6</span>
+        <span class="wheel-number" style="--i: 7">7</span>
+      </div>
+      <div class="arrow">▼</div>
+    </div>
+
+    <button id="spinBtn" class="spin-btn">🎡 Spin Now</button>
+    <button id="withdrawBtn" class="withdraw-btn" disabled>
+      Withdraw ₹1000
+    </button>
+    <p class="min-note">* Minimum withdraw ₹1000</p>
+
+   
+
+    <!-- Popup Ad -->
+    <div id="popupAd" class="popup-ad">
+      <div class="popup-content">
+        <span id="closePopup" class="close-btn">✖</span>
+        <h2>Sponsored Ads</h2>
+        <p>Watch these ads to continue...</p>
+        <div id="adBox" class="ad-box">Loading Ad...</div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
 </html>
