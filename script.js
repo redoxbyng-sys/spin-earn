@@ -71,12 +71,14 @@ function spinWheel() {
   const pickedIndex = Math.floor(Math.random() * segments.length);
   const pickedSegment = segments[pickedIndex];
 
-  const segmentDeg = pickedIndex * 45 + 22.5;
-  const extraSpins = 5;
+  const segmentDeg = pickedIndex * 45 + 22.5; // center of segment
+  const extraSpins = 1; // minimal extra spins for fast effect
   const totalDeg = extraSpins * 360 + segmentDeg;
 
   currentRotation += totalDeg;
-  wheel.style.transition = "transform 4s cubic-bezier(0.33, 1, 0.68, 1)";
+
+  // Immediate fast spin: 1s
+  wheel.style.transition = "transform 1s cubic-bezier(0.33, 1, 0.68, 1)";
   wheel.style.transform = `rotate(${currentRotation}deg)`;
 
   setTimeout(() => {
@@ -92,16 +94,14 @@ function spinWheel() {
 
     // Start confetti
     startConfetti();
-    setTimeout(stopConfetti, 3000);
+    setTimeout(stopConfetti, 4000); // short confetti burst
 
     // Enable withdraw if balance >= 1000
     withdrawBtn.disabled = balance < 1000;
 
     // Set cooldown if max spins reached
     if (spinsDone >= 10) setCooldown();
-
-    // alert(`🎉 Arrow landed on ${pickedSegment}! You earned ₹${reward}`);
-  }, 4200);
+  }, 1100); // slightly more than transition
 }
 
 instructionBtn.addEventListener("click", () => {

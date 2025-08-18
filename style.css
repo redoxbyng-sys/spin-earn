@@ -38,8 +38,8 @@ button {
 
 /* Withdraw button */
 .withdraw-btn {
-  background: linear-gradient(135deg, #4caf50, #2e7d32);
-  color: #fff;
+  background: linear-gradient(135deg, #c5bebe, #a7a0a0);
+  color: #000000;
   opacity: 0.6;
   cursor: not-allowed;
 }
