@@ -2,58 +2,41 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spin & Earn</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dog Spin & Earn</title>
+
+  <!-- Monetag SDK -->
+  <script src='//libtl.com/sdk.js' data-zone='9734652' data-sdk='show_9734652'></script>
+
+  <!-- CSS -->
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <h1>🎡 Spin & Earn</h1>
+  <h1>🐶 Dog Spin & Earn</h1>
   <div id="points">Balance: ₹0</div>
-  <div id="progress">Spins: 0/10</div>
 
-  <!-- Instruction Popup -->
-  <div id="instructionPopup" class="popup-ad">
-    <div class="popup-content">
-      <span id="closeInstruction" class="close-x">✖</span>
-      <h2>📖 How to Play</h2>
-      <ul class="instruction-list">
-        <li>✅ Withdraw when you reach ₹1000.</li>
-        <li>📩 Contact: <a href="https://t.me/yourTelegramID" target="_blank">Telegram</a></li>
-        <li>⏳ 10 spins per session → wait 2 hours for next spins.</li>
-        <li>📱 Use only one device per ID (earnings linked to device).</li>
-      </ul>
-    </div>
-  </div>
-
-  <button id="instructionBtn" class="instruction-btn">📖 Instructions</button>
-
-  <!-- Wheel -->
   <div class="wheel-container">
-    <div class="arrow"></div>
     <div id="wheel" class="wheel">
-      <div class="number" style="--i: 1">₹8</div>
-      <div class="number" style="--i: 2">₹7</div>
-      <div class="number" style="--i: 3">₹6</div>
-      <div class="number" style="--i: 4">₹5</div>
-      <div class="number" style="--i: 5">₹4</div>
-      <div class="number" style="--i: 6">NA</div>
-      <div class="number" style="--i: 7">₹2</div>
-      <div class="number" style="--i: 8">₹1</div>
-      <div class="center" id="centerNumber">?</div>
+      <div class="dog">
+        <img src="https://i.ibb.co/0V4K2cF/cute-dog.png" alt="Dog">
+      </div>
     </div>
   </div>
 
   <button id="spinBtn" class="spin-btn">🎡 Spin Now</button>
-  <div id="cooldownMsg" class="cooldown"></div>
 
-  <button id="withdrawBtn" class="withdraw-btn" disabled>Withdraw ₹1000</button>
-  <p class="min-note">* Minimum withdraw ₹1000</p>
+  <!-- Popup Ad Container -->
+  <div id="popupAd" class="popup-ad">
+    <div class="popup-content">
+      <span id="closePopup" class="close-btn">✖</span>
+      <h2>Sponsored Ad</h2>
+      <p>Watch this ad to continue...</p>
+      <div class="ad-box">Ad is loading...</div>
+    </div>
+  </div>
 
-  <canvas id="confettiCanvas"></canvas>
-
-  <!-- Interstitial Ad Script -->
-  <script src="//libtl.com/sdk.js" data-zone="9734652" data-sdk="show_9734652"></script>
-
+  <!-- JS -->
   <script src="script.js"></script>
+  
 </body>
 </html>
