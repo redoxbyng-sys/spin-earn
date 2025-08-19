@@ -1,8 +1,8 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: "Comic Sans MS", cursive, sans-serif;
-  background: linear-gradient(135deg, #ffecd2, #fcb69f);
+  font-family: Arial, Helvetica, sans-serif;
+  background: linear-gradient(135deg, #eeece9, #eeece9);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -10,6 +10,7 @@ body {
   min-height: 100vh;
   text-align: center;
 }
+
 
 /* Buttons general style */
 button {
@@ -169,7 +170,7 @@ h1 {
   color: #333;
 
   /* Place number in the middle of the segment */
-  --radius: 100px; /* Adjust radius to fit inside the colored slice */
+  --radius: 80px; /* Adjust radius to fit inside the colored slice */
 transform: rotate(calc(var(--i) * 45deg + 22.5deg)) translate(var(--radius)) rotate(calc(-1 * (var(--i) * 45deg + 22.5deg)));
 
   transform-origin: center center;

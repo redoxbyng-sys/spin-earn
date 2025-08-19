@@ -8,7 +8,7 @@ const closeInstruction = document.getElementById("closeInstruction");
 
 // Create a spins progress element on top
 let spinsDisplay = document.createElement("div");
-spinsDisplay.style.fontSize = "16px";
+spinsDisplay.style.fontSize = "20px";
 spinsDisplay.style.marginBottom = "10px";
 spinsDisplay.innerText = "Spins: 0/10";
 pointsDisplay.parentNode.insertBefore(spinsDisplay, pointsDisplay);
@@ -52,8 +52,8 @@ function updateConfetti() {
 function stopConfetti() { confettiCanvas.style.display = "none"; }
 
 // Wheel segments and rewards
-const segments = ["1","2","3","4","5","6","7","NA"];
-const rewards = { "1":1,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"NA":0 };
+const segments = ["1","2","3","4","5","6","7","0"];
+const rewards = { "1":1,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"0":0 };
 
 // Load balance & spins from localStorage
 let balance = parseInt(localStorage.getItem("dogBalance")) || 0;
@@ -64,6 +64,15 @@ spinsDisplay.innerText = `Spins: ${spinsDone}/10`;
 let spinning = false;
 let currentRotation = 0;
 
+window.addEventListener("load", () => {
+  if (localStorage.getItem("justSpun") === "true") {
+    startConfetti();
+    setTimeout(stopConfetti, 5000);
+    localStorage.removeItem("justSpun");
+  }
+});
+
+
 // Cooldown check
 if (spinsDone >= 10) setCooldown();
 
@@ -71,13 +80,12 @@ function spinWheel() {
   const pickedIndex = Math.floor(Math.random() * segments.length);
   const pickedSegment = segments[pickedIndex];
 
-  const segmentDeg = pickedIndex * 45 + 22.5; // center of segment
-  const extraSpins = 1; // minimal extra spins for fast effect
+  const segmentDeg = pickedIndex * 45 + 22.5;
+  const extraSpins = 1;
   const totalDeg = extraSpins * 360 + segmentDeg;
 
   currentRotation += totalDeg;
 
-  // Immediate fast spin: 1s
   wheel.style.transition = "transform 1s cubic-bezier(0.33, 1, 0.68, 1)";
   wheel.style.transform = `rotate(${currentRotation}deg)`;
 
@@ -87,32 +95,24 @@ function spinWheel() {
     spinsDone++;
     localStorage.setItem("dogBalance", balance);
     localStorage.setItem("spinsDone", spinsDone);
+    localStorage.setItem("justSpun", "true");
     pointsDisplay.innerText = `Balance: ₹${balance} (+₹${reward})`;
     spinsDisplay.innerText = `Spins: ${spinsDone}/10`;
 
     spinning = false;
 
-    // Start confetti
-    startConfetti();
-    setTimeout(stopConfetti, 4000); // short confetti burst
-
-    // Enable withdraw if balance >= 1000
     withdrawBtn.disabled = balance < 1000;
 
-    // Set cooldown if max spins reached
     if (spinsDone >= 10) setCooldown();
-  }, 1100); // slightly more than transition
+  }, 1100);
 }
 
 instructionBtn.addEventListener("click", () => {
   instructionPopup.style.display = "flex";
 });
-
 closeInstruction.addEventListener("click", () => {
   instructionPopup.style.display = "none";
 });
-
-// Close when clicking outside the popup content
 instructionPopup.addEventListener("click", (e) => {
   if (e.target === instructionPopup) instructionPopup.style.display = "none";
 });
@@ -161,9 +161,6 @@ function showAd(adType) {
         case "rewardedInterstitial":
           show_9734652().then(() => resolve()).catch(() => resolve());
           break;
-        case "rewardedPopup":
-          show_9734652('pop').then(() => resolve()).catch(() => resolve());
-          break;
         case "inAppInterstitial":
           show_9734652({
             type: 'inApp',
@@ -185,34 +182,34 @@ function showAd(adType) {
   });
 }
 
-// Show ads then spin
-async function showAdsThenSpin() {
+// Show ads after spin
+// Show ads after spin
+async function spinThenAds() {
   if (spinning) return;
-
-  // Check cooldown
   if (spinsDone >= 10) {
     setCooldown();
     return;
   }
-
   spinning = true;
 
-  try {
-    await showAd("rewardedInterstitial");
-    await new Promise(res => setTimeout(res, 2000));
-
-    await showAd("rewardedPopup");
-    await new Promise(res => setTimeout(res, 2000));
-
-    await showAd("inAppInterstitial");
-    await new Promise(res => setTimeout(res, 1000));
-  } catch(err) {
-    console.error("Ad error:", err);
-  }
-
-  // Spin wheel after ads
+  // First spin
   spinWheel();
-}
 
+  // After spin, show ads
+  setTimeout(async () => {
+    try {
+      await showAd("rewardedInterstitial");
+      await new Promise(res => setTimeout(res, 1000));
+      await showAd("inAppInterstitial");
+
+      // ✅ After ads finish, trigger celebration
+      startConfetti();
+      setTimeout(stopConfetti, 5000);
+
+    } catch(err) {
+      console.error("Ad error:", err);
+    }
+  }, 1200);
+}
 // Attach click
-spinBtn.addEventListener("click", showAdsThenSpin);
+spinBtn.addEventListener("click", spinThenAds);
